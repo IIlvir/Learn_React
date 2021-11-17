@@ -1,0 +1,14 @@
+.avatar{
+    width: 60px;
+    height: 60px;
+}
+
+.userInfo{
+    background-color: #fcedd3;
+    display: flex;
+    margin-bottom: 10px;
+}
+
+h2{
+    margin-left: 10px;
+}

@@ -1,3 +1,14 @@
 .posts{
     background-color: rgb(201, 201, 201);
 }
+
+.newPost{
+    display: flex;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+.addBt{
+    color: black;
+    margin-left: 5px;
+}

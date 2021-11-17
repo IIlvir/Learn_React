@@ -2,18 +2,16 @@ import React from "react";
 import s from './MyPosts.module.css';
 import Post from './Post/Post'
 
-const MyPost = () => {
+const MyPost = (props) => {
     return (
             <div>
                 My posts
-                <div>
+                <div className={s.newPost}>
                     <textarea placeholder='Text'>Текст</textarea>
-                    <button>Add</button>
+                    <button className={s.addBt}>Add</button>
                 </div>
                 <div className={s.posts}>
-                    <Post message='One' likeCount='2'/>
-                    <Post message='Two' likeCount='3'/>
-                    <Post message='Three' likeCount='4'/>
+                    {props.jsonPosts.map(obj => <Post key={obj.message} message={obj.message} likeCount={obj.likeCount}/>)}
                 </div>
             </div>
     );

@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import state from './Redux/state'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App jsonDialogs={state.jsonDialogs} jsonMessage={state.jsonMessage} jsonPosts={state.jsonPosts}/>
   </React.StrictMode>,
   document.getElementById('root')
 );
