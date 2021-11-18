@@ -7,7 +7,7 @@ import state from './Redux/state'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App jsonDialogs={state.jsonDialogs} jsonMessage={state.jsonMessage} jsonPosts={state.jsonPosts}/>
+    <App jsonDialogs={state.jsonDialogs} jsonMessage={state.jsonMessage} jsonPosts={state.jsonPosts} jsonMenu={state.jsonMenu}/>
   </React.StrictMode>,
   document.getElementById('root')
 );

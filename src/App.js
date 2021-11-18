@@ -13,7 +13,7 @@ const App = (props) => {
         <BrowserRouter>
             <div className='app-wrapper'>
                 <Header/>
-                <Navbar/>
+                <Navbar jsonMenu={props.jsonMenu}/>
                 <div className='app-wrapper-content'>
                     <Routes>
                         <Route path='/dialogs/*' element={<Dialogs jsonDialogs={props.jsonDialogs} jsonMessage={props.jsonMessage}/>}/>

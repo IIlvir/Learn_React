@@ -4,14 +4,3 @@
     height: 100vh;
     border-right: 2px #b6b6b6 solid;
 }
-
-.item {
-    color: white;
-    text-decoration: none;
-    padding: 5px;
-}
-
-.activeLink {
-    color: darkgreen;
-    text-decoration: none;
-}

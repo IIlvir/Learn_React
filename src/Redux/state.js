@@ -15,6 +15,13 @@ const state = {
         {id:"2",message:"Two",likeCount:"3"},
         {id:"3",message:"Three",likeCount:"4"}
     ],
+    jsonMenu: [
+        {to: '/profile', name: 'Profile'},
+        {to: '/dialogs', name: 'Messages'},
+        {to: '/news', name: 'News'},
+        {to: '/music', name: 'Music'},
+        {to: '/settings', name: 'Settings'},
+    ],
 };
 
 export default state;
