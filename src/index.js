@@ -3,14 +3,19 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import state from './Redux/state'
+import store from './Redux/state'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App jsonDialogs={state.jsonDialogs} jsonMessage={state.jsonMessage} jsonPosts={state.jsonPosts} jsonMenu={state.jsonMenu}/>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const Render = (state) => {
+    ReactDOM.render(
+        <React.StrictMode>
+            <App store={store}/>
+        </React.StrictMode>,
+        document.getElementById('root')
+    );
+};
+
+Render();
+store.subscriber(Render);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

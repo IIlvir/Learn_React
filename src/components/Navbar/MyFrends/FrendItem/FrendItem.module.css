@@ -1,3 +1,12 @@
-.frendItem{
+.friendItem{
+    display: flex;
+}
+li{
+    list-style-type: none;
+}
 
+.friendItem img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
 }

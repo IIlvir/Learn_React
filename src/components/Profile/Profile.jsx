@@ -12,7 +12,7 @@ const Profile = (props) => {
             </div>
             <div className={s.content}>
                 <UserInfo />
-                <MyPost jsonPosts={props.jsonPosts}/>
+                <MyPost state={props.state} dispatch={props.dispatch}/>
             </div>
         </div>
     );

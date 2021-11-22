@@ -13,11 +13,13 @@ const App = (props) => {
         <BrowserRouter>
             <div className='app-wrapper'>
                 <Header/>
-                <Navbar jsonMenu={props.jsonMenu}/>
+                <Navbar state={props.store.getState().navbarBlock} dispatch={props.store.dispatch}/>
                 <div className='app-wrapper-content'>
                     <Routes>
-                        <Route path='/dialogs/*' element={<Dialogs jsonDialogs={props.jsonDialogs} jsonMessage={props.jsonMessage}/>}/>
-                        <Route path='/profile' element={<Profile jsonPosts={props.jsonPosts}/>}/>
+                        <Route path='/profile' element={<Profile state={props.store.getState().profilePage}
+                                                                 dispatch={props.store.dispatch.bind(props.store)}/>}/>
+                        <Route path='/dialogs/*' element={<Dialogs state={props.store.getState().dialogsPage}
+                                                                   dispatch={props.store.dispatch.bind(props.store)}/>}/>
                         <Route path='/music' element={<Music/>}/>
                         <Route path='/news' element={<News/>}/>
                         <Route path='/settings' element={<Settings/>}/>

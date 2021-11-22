@@ -1,15 +1,16 @@
 import React from "react";
 import s from './MyFrends.module.css'
-import FrendItem from "./FrendItem/FrendItem";
+import FriendItem from "./FrendItem/FrendItem";
 
-const MyFrends = (props) => {
+const MyFriends = (props) => {
     return(
         <div className={s.friendsBlock}>
+            <h4>Best Friends</h4>
             <ul>
-                <FrendItem />
+                {props.state.map(obj => <FriendItem src={obj.srcAvatar} fullName={obj.fullName} key={obj.id}/>)}
             </ul>
         </div>
     );
 };
 
-export default MyFrends;
+export default MyFriends;

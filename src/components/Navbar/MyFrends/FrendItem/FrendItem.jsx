@@ -1,15 +1,15 @@
 import React from "react";
 import s from './FrendItem.module.css'
 
-const FrendItem = (props) => {
+const FriendItem = (props) => {
     return(
-        <li className={s.frendItem}>
-            <div>
-                <img src="../../../../Image/Cat.png" alt="cat" />
-                <h3>Иванов Иван</h3>
+        <li>
+            <div className={s.friendItem}>
+                <img src={props.src} alt="ava"/>
+                <h5>{props.fullName}</h5>
             </div>
         </li>
     );
 };
 
-export default FrendItem;
+export default FriendItem;
