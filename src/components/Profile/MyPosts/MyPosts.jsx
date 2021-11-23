@@ -1,7 +1,7 @@
 import React from "react";
 import s from './MyPosts.module.css';
 import Post from './Post/Post'
-import {addPostAC,updateNewPostTextAC} from "../../../Redux/state";
+import {addPostAC,updateNewPostTextAC} from "../../../Redux/profilePageReducer";
 
 const MyPost = (props) => {
     const textareaRef = React.createRef();

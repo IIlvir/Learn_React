@@ -1,7 +1,6 @@
-const ADD_POST = "ADD-POST";
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
-const ADD_MESSAGE = "ADD-MESSAGE";
-const UPDATE_NEW_TEXT_MESSAGE = "UPDATE-NEW-TEXT-MESSAGE";
+import profilePageReducer from "./profilePageReducer";
+import dialogPageReducer from "./dialogPageReducer";
+import navbarBlockReducer from "./navbarBlockReducer";
 
 const store = {
     _state: {
@@ -59,43 +58,12 @@ const store = {
         this.render = observer;
     },
     dispatch(action){
-        switch (action.type){
-            case ADD_POST:
-                const postObj = {
-                    id: String(this._state.profilePage.jsonPosts.length + 1),
-                    message: this._state.profilePage.newPostText,
-                    likeCount: "0",
-                };
-                this._state.profilePage.jsonPosts.push(postObj);
-                this._state.profilePage.newPostText = '';
-                this.render(this._state);
-                break;
-            case UPDATE_NEW_POST_TEXT:
-                this._state.profilePage.newPostText = action.text;
-                this.render(this._state);
-                break;
-            case ADD_MESSAGE:
-                const messageObj = {
-                    id: String(this._state.dialogsPage.jsonMessage.length + 1),
-                    message: this._state.dialogsPage.newMessageText,
-                };
-                this._state.dialogsPage.jsonMessage.push(messageObj);
-                this._state.dialogsPage.newMessageText = '';
-                this.render(this._state);
-                break;
-            case UPDATE_NEW_TEXT_MESSAGE:
-                this._state.dialogsPage.newMessageText = action.text;
-                this.render(this._state);
-                break;
-            default:
-        };
+        this._state.profilePage = profilePageReducer(this._state.profilePage,action);
+        this._state.dialogsPage = dialogPageReducer(this._state.dialogsPage,action);
+        this._state.navbarBlock = navbarBlockReducer(this._state.navbarBlock,action);
+        this.render(this._state);
     },
-}
-
-export const addPostAC = () => ({type:ADD_POST});
-export const updateNewPostTextAC = (text) => ({type:UPDATE_NEW_POST_TEXT,text:text});
-export const addMessageAC = () => ({type:ADD_MESSAGE});
-export const updateNewTextMessageAC = (text) => ({type:UPDATE_NEW_TEXT_MESSAGE,text:text});
+};
 
 window.state = store;
 export default store;

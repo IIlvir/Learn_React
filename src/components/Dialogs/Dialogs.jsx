@@ -2,7 +2,7 @@ import React from "react";
 import s from './Dialogs.module.css'
 import Dialog from "./Dialog/Dialog";
 import Message from "./Message/Message";
-import {addMessageAC,updateNewTextMessageAC} from "../../Redux/state";
+import {addMessageAC,updateNewTextMessageAC} from "../../Redux/dialogPageReducer";
 
 const Dialogs = (props) =>{
     const textareaRef = React.createRef();
