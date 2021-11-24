@@ -9,6 +9,7 @@ const reducers = combineReducers({
     navbarBlock: navbarBlockReducer,
 });
 
-const store = createStore(reducers);
+console.log('combineReducers = ', combineReducers)
 
+const store = createStore(reducers);
 export default store;
