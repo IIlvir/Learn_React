@@ -1,3 +1,4 @@
+
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 
@@ -21,15 +22,16 @@ const profilePageReducer = (state = preloadedState, action) => {
                 message: state.newPostText,
                 likeCount: "0",
             };
-            let cloneState = {...state};
-            cloneState.jsonPosts = [...state.jsonPosts];
-            cloneState.jsonPosts.push(postObj);
-            cloneState.newPostText = '';
-            return cloneState;
+            return {
+                ...state,
+                newPostText: '',
+                jsonPosts:[...state.jsonPosts,postObj]
+            };
         case UPDATE_NEW_POST_TEXT:
-            let cloneState2 = {...state};
-            cloneState2.newPostText = action.text;
-            return cloneState2;
+            return {
+                ...state,
+                newPostText: action.text
+            };
         default:
             return state;
     };
