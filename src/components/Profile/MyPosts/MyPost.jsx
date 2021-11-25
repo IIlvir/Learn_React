@@ -4,8 +4,6 @@ import Post from './Post/Post'
 
 const MyPost = (props) => {
     const textareaRef = React.createRef();
-    console.log(textareaRef)
-
 
     const onPostChange = () => {
         const text = textareaRef.current.value;

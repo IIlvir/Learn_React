@@ -14,6 +14,7 @@ const preloadedState = {
 };
 
 const profilePageReducer = (state = preloadedState, action) => {
+    debugger;
     switch (action.type) {
         case ADD_POST:
             const postObj = {

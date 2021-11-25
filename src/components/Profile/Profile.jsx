@@ -3,7 +3,7 @@ import s from './Profile.module.css';
 import UserInfo from "./UserInfo/UserInfo";
 import MyPostContainer from "./MyPosts/MyPostsContainer";
 
-const Profile = (props) => {
+const Profile = () => {
     return (
         <div>
             <div className={s.pageCover}>
@@ -12,7 +12,7 @@ const Profile = (props) => {
             </div>
             <div className={s.content}>
                 <UserInfo />
-                <MyPostContainer state={props.state} dispatch={props.dispatch}/>
+                <MyPostContainer />
             </div>
         </div>
     );
