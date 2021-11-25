@@ -14,7 +14,6 @@ const preloadedState = {
 };
 
 const profilePageReducer = (state = preloadedState, action) => {
-    debugger;
     switch (action.type) {
         case ADD_POST:
             const postObj = {
@@ -22,12 +21,15 @@ const profilePageReducer = (state = preloadedState, action) => {
                 message: state.newPostText,
                 likeCount: "0",
             };
-            state.jsonPosts.push(postObj);
-            state.newPostText = '';
-            return state;
+            let cloneState = {...state};
+            cloneState.jsonPosts = [...state.jsonPosts];
+            cloneState.jsonPosts.push(postObj);
+            cloneState.newPostText = '';
+            return cloneState;
         case UPDATE_NEW_POST_TEXT:
-            state.newPostText = action.text;
-            return state;
+            let cloneState2 = {...state};
+            cloneState2.newPostText = action.text;
+            return cloneState2;
         default:
             return state;
     };

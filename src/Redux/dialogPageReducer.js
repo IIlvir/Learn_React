@@ -26,12 +26,15 @@ const dialogPageReducer = (state = preloadedState, action) => {
                 id: String(state.jsonMessage.length + 1),
                 message: state.newMessageText,
             };
-            state.jsonMessage.push(messageObj);
-            state.newMessageText = '';
-            return state;
+            let cloneState = {...state};
+            cloneState.jsonMessage = [...state.jsonMessage]
+            cloneState.jsonMessage.push(messageObj);
+            cloneState.newMessageText = '';
+            return cloneState;
         case UPDATE_NEW_TEXT_MESSAGE:
-            state.newMessageText = action.text;
-            return state;
+            let cloneState2 = {...state};
+            cloneState2.newMessageText = action.text;
+            return cloneState2;
         default:
             return state;
     };

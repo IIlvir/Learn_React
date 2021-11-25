@@ -14,7 +14,7 @@ const store = {
             jsonMessage: [
                 {id:"1",message:"Hi"},
                 {id:"2",message:"Hi2"},
-                {id:"3",message:"H3"}
+                {id:"3",message:"H3"},
             ],
             newMessageText: '',
         },
