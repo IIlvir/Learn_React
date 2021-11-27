@@ -1,4 +1,4 @@
-import {addPostAC,updateNewPostTextAC} from "../../../Redux/profilePageReducer";
+import {addLike, addPostAC, updateNewPostTextAC} from "../../../Redux/profilePageReducer";
 import MyPosts from "./MyPost";
 import {connect} from "react-redux";
 
@@ -15,6 +15,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         onClick(){
             dispatch(addPostAC());
+        },
+        onClickLike(id){
+            dispatch(addLike(id));
         },
     };
 };

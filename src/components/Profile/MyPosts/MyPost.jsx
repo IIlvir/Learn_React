@@ -18,7 +18,10 @@ const MyPost = (props) => {
                     <button className={s.addBt} onClick={props.onClick}>Add</button>
                 </div>
                 <div className={s.posts}>
-                    {props.state.jsonPosts.map(obj => <Post key={obj.message} message={obj.message} likeCount={obj.likeCount}/>)}
+                    {props.state.jsonPosts.map(obj => <Post key={obj.message}
+                                                            message={obj.message}
+                                                            likeCount={obj.likeCount}
+                                                            onClick={() => {props.onClickLike(obj.id)}}/>)}
                 </div>
             </div>
     );
