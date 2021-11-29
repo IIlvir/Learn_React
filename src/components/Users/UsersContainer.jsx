@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import {addStateAC, toggleFollowAC} from "../../Redux/usersPageReducers";
+import {addStateAC, setCurrentPage, setTotalUsersCount, toggleFollowAC} from "../../Redux/usersPageReducers";
 import Users from "./Users";
 import {createMyFriendsAC, deleteMyFriendsAC} from "../../Redux/navbarBlockReducer";
 
@@ -17,7 +17,13 @@ const mapDispatchToProps = dispatch => ({
     },
     addUsers(usersArr){
         dispatch(addStateAC(usersArr));
-    }
+    },
+    setTotalUsersCount(totalUsersCount){
+        dispatch(setTotalUsersCount(totalUsersCount))
+    },
+    setCurrentPage(currentPage){
+        dispatch(setCurrentPage(currentPage))
+    },
 });
 
 const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users);

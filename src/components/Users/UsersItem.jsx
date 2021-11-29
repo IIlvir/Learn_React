@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "./Users.module.css"
+import classes from "./UsersItem.module.css"
 
 const UsersItem = (props) => {
     const btRef = React.createRef();
