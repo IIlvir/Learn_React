@@ -40,7 +40,7 @@ const navbarBlockReducer = (state = preloadedState,action) => {
             };
         default:
             return state;
-    };
+    }
 };
 
 export default navbarBlockReducer;

@@ -10,8 +10,8 @@ const mapDispatchToProps = dispatch => ({
         dispatch(toggleFollowAC(user.id));
         const userObj = {
             id: user.id,
-            srcAvatar: user.srcImg,
-            fullName: user.firstName,
+            srcAvatar: user.photos.small,
+            fullName: user.name,
         };
         (user.follow) ? dispatch(createMyFriendsAC(userObj)) : dispatch(deleteMyFriendsAC(userObj));
     },
