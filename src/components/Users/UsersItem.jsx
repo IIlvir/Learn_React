@@ -5,9 +5,12 @@ const UsersItem = (props) => {
     const btRef = React.createRef();
     return(
         <div className={classes.userItem}>
+            <button onClick={props.onClick}
+                    ref={btRef}
+                    className={classes.button}>{props.follow ? 'Unfollow' : 'Follow'}
+            </button>
             <img src={props.srcImg} alt='ava' width='50px' height='50px'/>
             <h5>{props.name}</h5>
-            <button onClick={props.onClick} ref={btRef} className={classes.button}>{props.follow ? 'Unfollow' : 'Follow'}</button>
         </div>
     );
 };
