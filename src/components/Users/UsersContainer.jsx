@@ -62,7 +62,8 @@ class UsersContainer extends React.Component {
                                                                  onClick={() => {
                                                                      this.props.onClick(obj)
                                                                  }}
-                                                                 id={obj.id} follow={obj.follow}/>)
+                                                                 id={obj.id}
+                                                                 follow={obj.follow}/>)
                 }
             </div>
             </>

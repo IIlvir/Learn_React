@@ -13,6 +13,8 @@ const Dialogs = (props) =>{
             </div>
             <div className="messages">
                 {props.state.jsonMessage.map(obj => <Message key={obj.message} message={obj.message}/>)}
+            </div>
+            <div className={s.sendMessage}>
                 <textarea placeholder='Message'
                           ref={textareaRef}
                           onChange={()=>{props.onChange(textareaRef.current.value)}}

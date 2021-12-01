@@ -1,6 +1,7 @@
 .nav {
     grid-area: n;
-    background-color: yellowgreen;
+    background-color: #fffcf4;
     height: 100vh;
-    border-right: 2px #b6b6b6 solid;
+    border-right: 1px #b6b6b6 solid;
+    border-top: 1px #b6b6b6 solid;
 }

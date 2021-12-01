@@ -1,5 +1,6 @@
 import React from "react";
 import classes from "./UsersItem.module.css"
+import {NavLink} from "react-router-dom";
 
 const UsersItem = (props) => {
     const btRef = React.createRef();
@@ -9,7 +10,9 @@ const UsersItem = (props) => {
                     ref={btRef}
                     className={classes.button}>{props.follow ? 'Unfollow' : 'Follow'}
             </button>
-            <img src={props.srcImg} alt='ava' width='50px' height='50px'/>
+            <NavLink to={'/users/' + props.id}>
+                <img src={props.srcImg} alt='ava' width='50px' height='50px'/>
+            </NavLink>
             <h5>{props.name}</h5>
         </div>
     );

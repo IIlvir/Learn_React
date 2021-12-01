@@ -10,8 +10,10 @@
 .active{
     color: black;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .item{
     color: black;
+    cursor: pointer;
 }
