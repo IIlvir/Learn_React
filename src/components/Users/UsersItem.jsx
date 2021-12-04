@@ -8,7 +8,7 @@ const UsersItem = (props) => {
         <div className={classes.userItem}>
             <button onClick={props.onClick}
                     ref={btRef}
-                    className={classes.button}>{props.follow ? 'Unfollow' : 'Follow'}
+                    className={classes.button}>{props.followed ? 'Unfollow' : 'Follow'}
             </button>
             <NavLink to={'/users/' + props.id}>
                 <img src={props.srcImg} alt='ava' width='50px' height='50px'/>

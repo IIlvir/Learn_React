@@ -4,19 +4,17 @@ import * as axios from "axios"
 import {connect} from "react-redux";
 import {userProfileSetStateAC} from "../../Redux/userProfileReduces";
 import {NavLink} from "react-router-dom";
-import {withRouter} from "react-router-dom";
 
 class UserProfile extends React.Component {
 
     componentDidMount() {
-        console.log('this.props.state.', this.props.state)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/2`).then(response => {
+        let userId = document.location.pathname.split('/')[2];
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`).then(response => {
             this.props.setState(response.data);
         });
     }
 
     render = () => {
-        debugger;
         return (
             <div className={css.userProfileBlock}>
                 <div className={css.userAva}>
@@ -52,6 +50,5 @@ const mapDispatchToProps = (dispatch) => ({
     },
 });
 
-let withRouterDataComponent = withRouter(UserProfile)
 
-export default connect(mapStateToProps,mapDispatchToProps)(withRouterDataComponent);
+export default connect(mapStateToProps,mapDispatchToProps)(UserProfile);

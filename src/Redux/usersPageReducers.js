@@ -28,7 +28,7 @@ const usersPageReducers = (state = preloadedState, action) => {
                 ...state,
                 users: state.users.map(obj => {
                     if (obj.id === action.id) {
-                        obj.follow = !obj.follow
+                        obj.followed = !obj.followed
                     }
                     return obj;
                 }),

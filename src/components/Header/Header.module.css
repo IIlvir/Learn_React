@@ -9,3 +9,11 @@
     height: auto;
     margin-left: 10px;
 }
+
+.loginBlock{
+    float: right;
+}
+
+.loginBlock a{
+    color: #555555;
+}

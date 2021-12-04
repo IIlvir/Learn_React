@@ -6,34 +6,34 @@ import {
     toggleFollowAC,
     setIsFetchingAC
 } from "../../Redux/usersPageReducers";
-import {createMyFriendsAC, deleteMyFriendsAC} from "../../Redux/navbarBlockReducer";
 import React from "react";
-import * as axios from "axios";
 import classes from "./UsersContainer.module.css";
 import UsersItem from "./UsersItem";
 import defaultUserAva from "../../Images/userAva.png";
 import Preloader from "../Preloader/Preloader"
+import instance from "../../instance/instance";
+import apiGetUsers from "../../api/apiGetUsers";
 
 class UsersContainer extends React.Component {
 
     onClickPage = (i) => {
         this.props.setIsFetching(true);
         this.props.setCurrentPage(i);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.state.pageSize}&page=${i}`).then((response) => {
+        apiGetUsers(this.props.state.pageSize,i).then((response) => {
             this.props.setIsFetching(false);
             this.props.addUsers(response.data.items);
             this.props.setTotalUsersCount(response.data.totalCount);
         });
-    }
+    };
 
     componentDidMount() {
         this.props.setIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.state.pageSize}&page=${this.props.state.currentPage}`).then((response) => {
+        apiGetUsers(this.props.state.pageSize,this.props.state.currentPage).then((response) => {
             this.props.setIsFetching(false);
             this.props.addUsers(response.data.items);
             this.props.setTotalUsersCount(response.data.totalCount);
         });
-    }
+    };
 
     render = () => {
 
@@ -54,6 +54,7 @@ class UsersContainer extends React.Component {
                                           onClick={() => {
                                               this.onClickPage(i)
                                           }}>{i}</span>)}
+                    <span>Total: {pagesCount}</span>
                 </div>
                 {
                     this.props.state.users.map(obj => <UsersItem key={obj.id}
@@ -63,7 +64,7 @@ class UsersContainer extends React.Component {
                                                                      this.props.onClick(obj)
                                                                  }}
                                                                  id={obj.id}
-                                                                 follow={obj.follow}/>)
+                                                                 followed={obj.followed}/>)
                 }
             </div>
             </>
@@ -75,13 +76,19 @@ const mapStateToProps = state => ({state: state.usersPage})
 
 const mapDispatchToProps = dispatch => ({
     onClick(user) {
-        dispatch(toggleFollowAC(user.id));
-        const userObj = {
-            id: user.id,
-            srcAvatar: user.photos.small,
-            fullName: user.name,
-        };
-        (user.follow) ? dispatch(createMyFriendsAC(userObj)) : dispatch(deleteMyFriendsAC(userObj));
+        if(!user.followed){
+            instance.post(`/follow/${user.id}`).then((response) => {
+                if(response.data.resultCode === 0){
+                    dispatch(toggleFollowAC(user.id));
+                };
+            });
+        } else {
+            instance.delete(`/follow/${user.id}`).then((response) => {
+                if(response.data.resultCode === 0){
+                    dispatch(toggleFollowAC(user.id));
+                }
+            });
+        }
     },
     addUsers(usersArr){
         dispatch(addStateAC(usersArr));
