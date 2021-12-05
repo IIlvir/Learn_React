@@ -7,6 +7,7 @@ const UsersItem = (props) => {
     return(
         <div className={classes.userItem}>
             <button onClick={props.onClick}
+                    disabled={props.followingProgress}
                     ref={btRef}
                     className={classes.button}>{props.followed ? 'Unfollow' : 'Follow'}
             </button>

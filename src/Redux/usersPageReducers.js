@@ -3,6 +3,7 @@ const ADD_STATE = "ADD-STATE";
 const SET_TOTAL_USERS_COUNT = "SET-TOTAL-USERS-COUNT";
 const SET_CURRENT_PAGE = "SET-CURRENT-PAGE";
 const SET_IS_FETCHING = "TOGGLE-IS-FETCHING";
+const TOGGLE_FOLLOWING_PROCESS = "TOGGLE-FOLLOWING-PROCESS";
 
 export const toggleFollowAC = (id) => ({type: TOGGLE_FOLLOW, id: id});
 export const addStateAC = (users) => ({type: ADD_STATE, users: users});
@@ -12,6 +13,8 @@ export const setTotalUsersCount = (totalUsersCount) => ({
 });
 export const setCurrentPage = (currentPage) => ({type: SET_CURRENT_PAGE, currentPage: currentPage});
 export const setIsFetchingAC = (val) => ({type: SET_IS_FETCHING, isFetching: val});
+export const toggleFollowingProcess = (val) => ({type: TOGGLE_FOLLOWING_PROCESS, followingProgress:val})
+
 
 const preloadedState = {
     users: [],
@@ -19,6 +22,7 @@ const preloadedState = {
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: false,
+    followingProgress: false,
 };
 
 const usersPageReducers = (state = preloadedState, action) => {
@@ -52,6 +56,11 @@ const usersPageReducers = (state = preloadedState, action) => {
             return {
                 ...state,
                 isFetching: action.isFetching,
+            }
+        case TOGGLE_FOLLOWING_PROCESS :
+            return {
+                ...state,
+                followingProgress: action.followingProgress,
             }
         default:
             return state;

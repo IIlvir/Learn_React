@@ -4,7 +4,7 @@ import {
     setCurrentPage,
     setTotalUsersCount,
     toggleFollowAC,
-    setIsFetchingAC
+    setIsFetchingAC, toggleFollowingProcess
 } from "../../Redux/usersPageReducers";
 import React from "react";
 import classes from "./UsersContainer.module.css";
@@ -64,7 +64,8 @@ class UsersContainer extends React.Component {
                                                                      this.props.onClick(obj)
                                                                  }}
                                                                  id={obj.id}
-                                                                 followed={obj.followed}/>)
+                                                                 followed={obj.followed}
+                                                                 followingProgress={this.props.state.followingProgress}/>)
                 }
             </div>
             </>
@@ -77,15 +78,19 @@ const mapStateToProps = state => ({state: state.usersPage})
 const mapDispatchToProps = dispatch => ({
     onClick(user) {
         if(!user.followed){
+            dispatch(toggleFollowingProcess(true))
             instance.post(`/follow/${user.id}`).then((response) => {
                 if(response.data.resultCode === 0){
                     dispatch(toggleFollowAC(user.id));
-                };
+                    dispatch(toggleFollowingProcess(false));
+                }
             });
         } else {
+            dispatch(toggleFollowingProcess(true))
             instance.delete(`/follow/${user.id}`).then((response) => {
                 if(response.data.resultCode === 0){
                     dispatch(toggleFollowAC(user.id));
+                    dispatch(toggleFollowingProcess(false))
                 }
             });
         }
@@ -101,7 +106,7 @@ const mapDispatchToProps = dispatch => ({
     },
     setIsFetching(isFetching){
         dispatch(setIsFetchingAC(isFetching));
-    }
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
