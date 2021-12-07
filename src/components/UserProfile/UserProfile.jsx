@@ -1,17 +1,14 @@
 import React from "react";
 import css from "./UserProfile.module.css"
-import * as axios from "axios"
 import {connect} from "react-redux";
-import {userProfileSetStateAC} from "../../Redux/userProfileReduces";
+import {getUserProfileInfo} from "../../Redux/userProfileReduces";
 import {NavLink} from "react-router-dom";
 
 class UserProfile extends React.Component {
 
     componentDidMount() {
         let userId = document.location.pathname.split('/')[2];
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`).then(response => {
-            this.props.setState(response.data);
-        });
+        this.props.getUserProfileInfo(userId);
     }
 
     render = () => {
@@ -45,9 +42,9 @@ const mapStateToProps = (state) => {
 }};
 
 const mapDispatchToProps = (dispatch) => ({
-    setState(state){
-        dispatch(userProfileSetStateAC(state));
-    },
+    getUserProfileInfo(userId){
+        dispatch(getUserProfileInfo(userId));
+    }
 });
 
 

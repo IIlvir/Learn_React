@@ -1,15 +1,12 @@
 import React from "react";
 import s from './MyFrends.module.css'
 import FriendItem from "./FrendItem/FrendItem";
-import apiGetFriends from "../../../api/apiGetFriends";
 import {connect} from "react-redux";
-import {createMyFriendsAC} from "../../../Redux/navbarBlockReducer";
+import {addMyFriendsToState} from "../../../Redux/navbarBlockReducer";
 
 class MyFriendsComponent extends React.Component {
     componentDidMount() {
-        apiGetFriends().then(response => {
-            this.props.addFriends(response.data.items)
-        })
+        this.props.addMyFriends();
     }
 
     render(){
@@ -29,8 +26,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    addFriends(usersArr){
-        dispatch(createMyFriendsAC(usersArr));
+
+    addMyFriends(){
+        dispatch(addMyFriendsToState())
     }
 })
 export default connect(mapStateToProps,mapDispatchToProps)(MyFriendsComponent);

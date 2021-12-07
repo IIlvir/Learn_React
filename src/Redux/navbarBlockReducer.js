@@ -1,8 +1,20 @@
+import {api} from "../api/api";
+
 const CREATE_MY_FRIENDS = "CREATE-MY-FRIENDS";
 const DELETE_MY_FRIENDS = "DELETE-MY-FRIENDS";
 
 export const createMyFriendsAC = (user) => ({type:CREATE_MY_FRIENDS, user:user});
 export const deleteMyFriendsAC = (user) => ({type:DELETE_MY_FRIENDS, user:user});
+
+export const addMyFriendsToState = () => {
+    return(
+        (dispatch) => {
+            api.getFriends().then(response => {
+                dispatch(createMyFriendsAC(response.data.items));
+            });
+        }
+    );
+}
 
 const preloadedState = {
     jsonMenu: [
@@ -20,7 +32,7 @@ const navbarBlockReducer = (state = preloadedState,action) => {
         case CREATE_MY_FRIENDS:
             return {
                 ...state,
-                jsonFriends: [...state.jsonFriends].concat(action.user),
+                jsonFriends: action.user,
             };
         case DELETE_MY_FRIENDS:
             return {

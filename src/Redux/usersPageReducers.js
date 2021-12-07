@@ -1,3 +1,6 @@
+import {api} from "../api/api";
+import {addMyFriendsToState} from "./navbarBlockReducer";
+
 const TOGGLE_FOLLOW = "TOGGLE-FOLLOW";
 const ADD_STATE = "ADD-STATE";
 const SET_TOTAL_USERS_COUNT = "SET-TOTAL-USERS-COUNT";
@@ -6,15 +9,59 @@ const SET_IS_FETCHING = "TOGGLE-IS-FETCHING";
 const TOGGLE_FOLLOWING_PROCESS = "TOGGLE-FOLLOWING-PROCESS";
 
 export const toggleFollowAC = (id) => ({type: TOGGLE_FOLLOW, id: id});
-export const addStateAC = (users) => ({type: ADD_STATE, users: users});
+export const setUsersAC = (users) => ({type: ADD_STATE, users: users});
 export const setTotalUsersCount = (totalUsersCount) => ({
     type: SET_TOTAL_USERS_COUNT,
     totalUsersCount: totalUsersCount
 });
 export const setCurrentPage = (currentPage) => ({type: SET_CURRENT_PAGE, currentPage: currentPage});
 export const setIsFetchingAC = (val) => ({type: SET_IS_FETCHING, isFetching: val});
-export const toggleFollowingProcess = (val) => ({type: TOGGLE_FOLLOWING_PROCESS, followingProgress:val})
+export const toggleFollowingProcess = (val) => ({type: TOGGLE_FOLLOWING_PROCESS, followingProgress: val})
 
+export const getUsers = (pageSize = 10, currentPage = 1) => {
+    return (
+        (dispatch) => {
+            dispatch(setIsFetchingAC(true));
+            api.getUsers(pageSize, currentPage).then((response) => {
+                dispatch(setIsFetchingAC(false));
+                dispatch(setUsersAC(response.data.items));
+                dispatch(setTotalUsersCount(response.data.totalCount));
+            });
+        }
+    );
+};
+
+export const subscribeToFriend = (id) => {
+    return (
+        (dispatch) => {
+            dispatch(toggleFollowingProcess(true));
+            api.subscribeToFriend(id).then((response) => {
+                if (response.data.resultCode === 0) {
+                    dispatch(toggleFollowAC(id));
+                    dispatch(toggleFollowingProcess(false));
+                }
+            }).then(
+                dispatch(addMyFriendsToState())
+            );
+        }
+    );
+}
+
+export const unsubscribeToFriend = (id) => {
+    return (
+        (dispatch) => {
+            dispatch(toggleFollowingProcess(true))
+            api.unsubscribeToFriend(id).then((response) => {
+                if (response.data.resultCode === 0) {
+                    dispatch(toggleFollowAC(id));
+                    dispatch(toggleFollowingProcess(false))
+                }
+            }).then(
+                dispatch(addMyFriendsToState())
+            );
+        }
+    )
+}
 
 const preloadedState = {
     users: [],

@@ -1,3 +1,5 @@
+import {api} from "../api/api";
+
 const SET_USER_DATA = 'SET-USER-DATA';
 const SET_IS_FETCHING = 'SET-IS-FETCHING'
 
@@ -9,6 +11,14 @@ const preloaderState = {
     login: null,
     email: null,
     isFetching: false,
+}
+
+export const auth = () => {
+    return (dispatch) => {
+        api.authMe().then(response => {
+            dispatch(setUserData(response.data.data));
+        })
+    }
 }
 
 const authReducer = (state = preloaderState, action) => {

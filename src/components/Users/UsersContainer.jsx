@@ -1,38 +1,23 @@
 import {connect} from "react-redux";
 import {
-    addStateAC,
     setCurrentPage,
-    setTotalUsersCount,
-    toggleFollowAC,
-    setIsFetchingAC, toggleFollowingProcess
+    getUsers, subscribeToFriend, unsubscribeToFriend
 } from "../../Redux/usersPageReducers";
 import React from "react";
 import classes from "./UsersContainer.module.css";
 import UsersItem from "./UsersItem";
 import defaultUserAva from "../../Images/userAva.png";
 import Preloader from "../Preloader/Preloader"
-import instance from "../../instance/instance";
-import apiGetUsers from "../../api/apiGetUsers";
 
 class UsersContainer extends React.Component {
 
-    onClickPage = (i) => {
-        this.props.setIsFetching(true);
-        this.props.setCurrentPage(i);
-        apiGetUsers(this.props.state.pageSize,i).then((response) => {
-            this.props.setIsFetching(false);
-            this.props.addUsers(response.data.items);
-            this.props.setTotalUsersCount(response.data.totalCount);
-        });
+    onClickPage = (pageNumber) => {
+        this.props.getUsers(this.props.state.pageSize,pageNumber);
+        this.props.setCurrentPage(pageNumber);
     };
 
     componentDidMount() {
-        this.props.setIsFetching(true);
-        apiGetUsers(this.props.state.pageSize,this.props.state.currentPage).then((response) => {
-            this.props.setIsFetching(false);
-            this.props.addUsers(response.data.items);
-            this.props.setTotalUsersCount(response.data.totalCount);
-        });
+        this.props.getUsers(this.props.state.pageSize,this.props.state.currentPage);
     };
 
     render = () => {
@@ -78,35 +63,18 @@ const mapStateToProps = state => ({state: state.usersPage})
 const mapDispatchToProps = dispatch => ({
     onClick(user) {
         if(!user.followed){
-            dispatch(toggleFollowingProcess(true))
-            instance.post(`/follow/${user.id}`).then((response) => {
-                if(response.data.resultCode === 0){
-                    dispatch(toggleFollowAC(user.id));
-                    dispatch(toggleFollowingProcess(false));
-                }
-            });
+            dispatch(subscribeToFriend(user.id));
         } else {
-            dispatch(toggleFollowingProcess(true))
-            instance.delete(`/follow/${user.id}`).then((response) => {
-                if(response.data.resultCode === 0){
-                    dispatch(toggleFollowAC(user.id));
-                    dispatch(toggleFollowingProcess(false))
-                }
-            });
+            dispatch(unsubscribeToFriend(user.id));
         }
     },
-    addUsers(usersArr){
-        dispatch(addStateAC(usersArr));
-    },
-    setTotalUsersCount(totalUsersCount){
-        dispatch(setTotalUsersCount(totalUsersCount))
-    },
+
     setCurrentPage(currentPage){
         dispatch(setCurrentPage(currentPage))
     },
-    setIsFetching(isFetching){
-        dispatch(setIsFetchingAC(isFetching));
-    },
+    getUsers(pageSize,currentPage){
+        dispatch(getUsers(pageSize, currentPage));
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);

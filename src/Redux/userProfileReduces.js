@@ -1,3 +1,5 @@
+import {api} from "../api/api";
+
 const SET_STATE = "SET-STATE";
 
 const preloadState = {
@@ -23,6 +25,16 @@ const preloadState = {
 };
 
 export const userProfileSetStateAC = (state) => ({type: SET_STATE, state: state});
+
+export const getUserProfileInfo = (userId) => {
+    return(
+        (dispatch) => {
+            api.getUserProfileInfo(userId).then(response => {
+                dispatch(userProfileSetStateAC(response.data));
+            });
+        }
+    );
+}
 
 
 const userProfileReduces = (state = preloadState, action) => {
