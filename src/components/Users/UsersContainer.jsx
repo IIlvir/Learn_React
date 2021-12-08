@@ -8,6 +8,8 @@ import classes from "./UsersContainer.module.css";
 import UsersItem from "./UsersItem";
 import defaultUserAva from "../../Images/userAva.png";
 import Preloader from "../Preloader/Preloader"
+import {compose} from "redux";
+import withAuthRedirect from "../../hoc/withAuthRedirect";
 
 class UsersContainer extends React.Component {
 
@@ -77,4 +79,4 @@ const mapDispatchToProps = dispatch => ({
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default compose(withAuthRedirect,connect(mapStateToProps, mapDispatchToProps))(UsersContainer)

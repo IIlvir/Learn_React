@@ -11,12 +11,14 @@ const preloaderState = {
     login: null,
     email: null,
     isFetching: false,
+    isAuth: false,
 }
 
 export const auth = () => {
     return (dispatch) => {
         api.authMe().then(response => {
-            dispatch(setUserData(response.data.data));
+            let isAuth = response.data.resultCode === 0;
+            dispatch(setUserData({...response.data.data,isAuth:isAuth}));
         })
     }
 }
@@ -24,10 +26,11 @@ export const auth = () => {
 const authReducer = (state = preloaderState, action) => {
     switch (action.type){
         case SET_USER_DATA:
-            return({
+            return({...state,
                 userId: action.data.id,
                 login: action.data.login,
                 email: action.data.email,
+                isAuth: action.data.isAuth,
             });
         case SET_IS_FETCHING:
             return ({

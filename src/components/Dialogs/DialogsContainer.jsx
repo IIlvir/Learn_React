@@ -1,6 +1,8 @@
 import {addMessageAC,updateNewTextMessageAC} from "../../Redux/dialogPageReducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
+import withAuthRedirect from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 const onStateToProps = (state) => {
     return {
@@ -19,6 +21,4 @@ const onDispatchToProps = (dispatch) => {
     };
 };
 
-const DialogsContainer = connect(onStateToProps,onDispatchToProps)(Dialogs)
-
-export default DialogsContainer;
+export default compose(withAuthRedirect,connect(onStateToProps,onDispatchToProps))(Dialogs)
