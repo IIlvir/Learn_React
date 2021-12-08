@@ -3,6 +3,7 @@ import s from './Profile.module.css';
 import UserInfo from "./UserInfo/UserInfo";
 import MyPostContainer from "./MyPosts/MyPostsContainer";
 import withAuthRedirect from "../../hoc/withAuthRedirect";
+import ProfileStatus from "./ProfileStatus";
 
 const Profile = () => {
     return (
@@ -13,6 +14,7 @@ const Profile = () => {
             </div>
             <div className={s.content}>
                 <UserInfo />
+                <ProfileStatus status='yo'/>
                 <MyPostContainer />
             </div>
         </div>
