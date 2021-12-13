@@ -7,6 +7,4 @@ const onStateToProps = (state) => {
     };
 };
 
-const NavbarContainer = connect(onStateToProps)(Navbar);
-
-export default NavbarContainer;
+export default connect(onStateToProps)(Navbar);;

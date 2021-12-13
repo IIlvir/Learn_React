@@ -1,39 +1,52 @@
 import instance from "../instance/instance";
 
 export const api = {
-    getFriends () {
+    getFriends() {
         return (
             instance.get(`/users?friend=true`)
         );
     },
 
-    getUsers (count,page) {
+    getUsers(count, page) {
         return (
             instance.get(`/users?count=${count}&page=${page}`)
         );
     },
 
-    subscribeToFriend (id){
-        return(
+    subscribeToFriend(id) {
+        return (
             instance.post(`/follow/${id}`)
         );
     },
 
-    unsubscribeToFriend(id){
-        return(
+    unsubscribeToFriend(id) {
+        return (
             instance.delete(`/follow/${id}`)
-        )
+        );
     },
 
-    authMe(){
-        return(
+    authMe() {
+        return (
             instance.get('/auth/me')
         );
     },
 
-    getUserProfileInfo(id){
-        return(
+    getUserProfileInfo(id) {
+        return (
             instance.get(`/profile/${id}`)
-        )
+        );
     },
+
+    getProfileStatus() {
+        return (
+            instance.get('/profile/status/21129')
+        );
+    },
+
+    setProfileStatus(status) {
+        return (
+            instance.put('/profile/status', {status: status})
+        );
+    },
+
 }

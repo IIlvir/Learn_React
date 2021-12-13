@@ -2,12 +2,6 @@ import {addLike, addPostAC, updateNewPostTextAC} from "../../../Redux/profilePag
 import MyPosts from "./MyPost";
 import {connect} from "react-redux";
 
-const mapStateToProps = (state) => {
-    return {
-        state: state.profilePage,
-    }
-};
-
 const mapDispatchToProps = (dispatch) => {
     return{
         onChange(text) {
@@ -22,6 +16,10 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-const MyPostContainer = connect(mapStateToProps,mapDispatchToProps)(MyPosts)
+const mapStateToProps = (state) => {
+    return {
+        state: state.profilePage,
+    }
+};
 
-export default MyPostContainer;
+export default connect(mapStateToProps,mapDispatchToProps)(MyPosts);

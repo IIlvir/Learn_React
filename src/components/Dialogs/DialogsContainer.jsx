@@ -4,12 +4,6 @@ import {connect} from "react-redux";
 import withAuthRedirect from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 
-const onStateToProps = (state) => {
-    return {
-        state: state.dialogsPage,
-    };
-};
-
 const onDispatchToProps = (dispatch) => {
     return{
         onClick(){
@@ -18,6 +12,12 @@ const onDispatchToProps = (dispatch) => {
         onChange(text){
             dispatch(updateNewTextMessageAC(text));
         },
+    };
+};
+
+const onStateToProps = (state) => {
+    return {
+        state: state.dialogsPage,
     };
 };
 
