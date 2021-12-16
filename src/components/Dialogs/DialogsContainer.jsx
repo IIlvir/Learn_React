@@ -1,24 +1,31 @@
-import {addMessageAC,updateNewTextMessageAC} from "../../Redux/dialogPageReducer";
+import {addMessageAC, updateNewTextMessageAC} from "../../Redux/dialogPageReducer";
 import Dialogs from "./Dialogs";
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import withAuthRedirect from "../../hoc/withAuthRedirect";
-import {compose} from "redux";
+import {useCallback} from "react";
 
-const onDispatchToProps = (dispatch) => {
-    return{
-        onClick(){
-            dispatch(addMessageAC())
-        },
-        onChange(text){
-            dispatch(updateNewTextMessageAC(text));
-        },
-    };
-};
+const DialogsContainer = () => {
+    const dispatch = useDispatch();
 
-const onStateToProps = (state) => {
-    return {
-        state: state.dialogsPage,
-    };
-};
+    const onClick = useCallback(
+        () => dispatch(addMessageAC()),
+        []
+    );
 
-export default compose(withAuthRedirect,connect(onStateToProps,onDispatchToProps))(Dialogs)
+    const onChange = useCallback(
+        (text) => dispatch(updateNewTextMessageAC(text)),
+        []
+    );
+
+    const stateDialogsPage = useSelector(
+        state => state.dialogsPage
+    );
+
+    return <Dialogs
+        state={stateDialogsPage}
+        onChange={onChange}
+        onClick={onClick}
+    />
+}
+
+export default withAuthRedirect(DialogsContainer)

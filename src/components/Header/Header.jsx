@@ -8,7 +8,7 @@ const Header = (props) => {
         <header className={c.header}>
             <img alt='logo' src={logo} />
             <div className={c.loginBlock}>
-                <NavLink to={'/login'}>{props.props.state.login === null ? 'Login' : props.props.state.login }</NavLink>
+                <NavLink to={'/login'}>{props.state.login === null ? 'Login' : props.state.login }</NavLink>
             </div>
         </header>
     );

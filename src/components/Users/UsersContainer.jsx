@@ -1,80 +1,87 @@
-import {connect} from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import {
     setCurrentPage,
-    getUsers, subscribeToFriend, unsubscribeToFriend
+    getUsers,
+    subscribeToFriend,
+    unsubscribeToFriend
 } from "../../Redux/usersPageReducers";
 import React, {useEffect} from "react";
 import classes from "./UsersContainer.module.css";
 import UsersItem from "./UsersItem";
 import defaultUserAva from "../../Images/userAva.png";
 import Preloader from "../Preloader/Preloader"
-import {compose} from "redux";
 import withAuthRedirect from "../../hoc/withAuthRedirect";
 
-const UsersContainer = (props) => {
+const UsersContainer = () => {
+    const dispatch = useDispatch();
 
-    const onClickPage = (pageNumber) => {
-        props.getUsers(props.state.pageSize, pageNumber);
-        props.setCurrentPage(pageNumber);
+    const state = useSelector(
+        state => state.usersPage
+    );
+
+    const onClick = (user) => {
+        if (!user.followed) {
+            dispatch(subscribeToFriend(user.id));
+        } else {
+            dispatch(unsubscribeToFriend(user.id));
+        }
     };
 
-    useEffect(()=>{
-        props.getUsers(props.state.pageSize, props.state.currentPage);
-    },[]);
+    const setCurrentPage1 = (currentPage) => dispatch(setCurrentPage(currentPage));
+
+    const getUsers1 = (pageSize, currentPage) => dispatch(getUsers(pageSize, currentPage));
+
+    const onClickPage = (pageNumber) => {
+        return () => {
+            getUsers1(state.pageSize, pageNumber);
+            setCurrentPage1(pageNumber);
+        }
+    };
+
+    const onClickUser = (user) => () => onClick(user);
+
+    useEffect(
+        () => getUsers1(state.pageSize, state.currentPage),
+        []
+    );
 
 
-    let pagesCount = Math.ceil(props.state.totalUsersCount / props.state.pageSize);
+    let pagesCount = Math.ceil(state.totalUsersCount / state.pageSize);
     let pages = [];
-    let currentPage = props.state.currentPage < 6 ? 1 : props.state.currentPage - 5;
+    let currentPage = state.currentPage < 6 ? 1 : state.currentPage - 5;
     for (let i = currentPage; i <= pagesCount; i++) {
         if (i > currentPage + 9) break;
         pages.push(i);
     }
 
-    return (<>
-            {props.state.isFetching ? <Preloader/> : null}
+    return (
+        <>
+            {state.isFetching ? <Preloader/> : null}
             <div>
                 <div className={classes.pages}>
-                    {pages.map(i => <span key={i}
-                                          className={i === props.state.currentPage ? classes.active : classes.item}
-                                          onClick={() => {
-                                              onClickPage(i)
-                                          }}>{i}</span>)}
+                    {pages.map(i => <span
+                                        key={i}
+                                        className={i === state.currentPage ? classes.active : classes.item}
+                                        onClick={onClickPage(i)}
+                                    >
+                                        {i}
+                                    </span>
+                    )}
                     <span>Total: {pagesCount}</span>
                 </div>
                 {
-                    props.state.users.map(obj => <UsersItem key={obj.id}
-                                                            srcImg={obj.photos.small || defaultUserAva}
-                                                            name={obj.name}
-                                                            onClick={() => {
-                                                                props.onClick(obj)
-                                                            }}
-                                                            id={obj.id}
-                                                            followed={obj.followed}
-                                                            followingProgress={props.state.followingProgress}/>)
+                    state.users.map(obj => <UsersItem
+                                                key={obj.id}
+                                                srcImg={obj.photos.small || defaultUserAva}
+                                                name={obj.name}
+                                                onClick={onClickUser(obj)}
+                                                id={obj.id}
+                                                followed={obj.followed}
+                                                followingProgress={state.followingProgress}/>)
                 }
             </div>
         </>
     );
 }
 
-const mapStateToProps = state => ({state: state.usersPage})
-
-const mapDispatchToProps = dispatch => ({
-    onClick(user) {
-        if (!user.followed) {
-            dispatch(subscribeToFriend(user.id));
-        } else {
-            dispatch(unsubscribeToFriend(user.id));
-        }
-    },
-
-    setCurrentPage(currentPage) {
-        dispatch(setCurrentPage(currentPage))
-    },
-    getUsers(pageSize, currentPage) {
-        dispatch(getUsers(pageSize, currentPage));
-    }
-});
-
-export default compose(withAuthRedirect, connect(mapStateToProps, mapDispatchToProps))(UsersContainer)
+export default withAuthRedirect(UsersContainer)

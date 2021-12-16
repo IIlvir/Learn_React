@@ -1,25 +1,35 @@
 import {addLike, addPostAC, updateNewPostTextAC} from "../../../Redux/profilePageReducer";
 import MyPosts from "./MyPost";
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {useCallback} from "react";
 
-const mapDispatchToProps = (dispatch) => {
-    return{
-        onChange(text) {
-            dispatch(updateNewPostTextAC(text))
-        },
-        onClick(){
-            dispatch(addPostAC());
-        },
-        onClickLike(id){
-            dispatch(addLike(id));
-        },
-    };
-};
+const MyPostsContainer = () => {
+    const dispatch = useDispatch();
 
-const mapStateToProps = (state) => {
-    return {
-        state: state.profilePage,
-    }
-};
+    const onChange = useCallback(
+        (text) => dispatch(updateNewPostTextAC(text)),
+        [updateNewPostTextAC]
+    );
 
-export default connect(mapStateToProps,mapDispatchToProps)(MyPosts);
+    const onClick = useCallback(
+        () => dispatch(addPostAC()),
+        []
+    );
+
+    const onClickLike = useCallback(
+        (id) => dispatch(addLike(id)),
+        [addLike]);
+
+    const stateMyPosts = useSelector(
+        state => state.profilePage
+    )
+
+    return <MyPosts
+                state={stateMyPosts}
+                onChange={onChange}
+                onClick={onClick}
+                onClickLike={onClickLike}
+            />
+}
+
+export default MyPostsContainer;

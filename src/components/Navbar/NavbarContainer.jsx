@@ -1,10 +1,15 @@
 import Navbar from "./Navbar";
-import {connect} from "react-redux";
+import {useSelector} from "react-redux";
 
-const onStateToProps = (state) => {
-    return {
-        state: state.navbarBlock,
-    };
-};
+const NavbarContainer = () => {
 
-export default connect(onStateToProps)(Navbar);;
+    const stateNavbarBlock = useSelector(
+        state => state.navbarBlock
+    );
+
+    return <Navbar
+                state={stateNavbarBlock}
+            />
+}
+
+export default NavbarContainer;

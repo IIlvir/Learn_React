@@ -5,12 +5,22 @@ import MyFriends from "./MyFrends/MyFrends";
 
 const Navbar = (props) => {
     return (
-        <div>
-            <nav className={classes.nav}>
-                {props.state.jsonMenu.map(obj => <MenuItem key={obj.to} to={obj.to} name={obj.name}/>)}
-                <MyFriends state={props.state.jsonFriends}/>
+        <>
+            <nav
+                className={classes.nav}
+            >
+                {props.state.jsonMenu.map(
+                    obj => <MenuItem
+                            key={obj.to}
+                            to={obj.to}
+                            name={obj.name}
+                        />
+                )}
+                <MyFriends
+                    state={props.state.jsonFriends}
+                />
             </nav>
-        </div>
+        </>
     );
 };
 

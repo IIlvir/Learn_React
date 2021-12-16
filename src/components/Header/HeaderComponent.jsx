@@ -1,18 +1,28 @@
-import React, {useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import Header from "./Header";
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {auth} from "../../Redux/authReducer";
 
-const HeaderComponent = (props) => {
-    useEffect(() => {
-        props.auth();
-    },[]);
+const HeaderComponent = () => {
+    const dispatch = useDispatch();
 
-    return <Header props={props}/>;
+    const authState = useSelector(
+        (state) => state.auth
+    );
+
+    const authMe = useCallback(
+        () => dispatch(auth()),
+        []
+    );
+
+    useEffect(
+        () => authMe(),
+        []
+    );
+
+    return <Header
+                state={authState}
+            />;
 }
 
-const mapStateToProps = (state) => ({
-    state: state.auth,
-});
-
-export default connect(mapStateToProps, {auth})(HeaderComponent);
+export default HeaderComponent;

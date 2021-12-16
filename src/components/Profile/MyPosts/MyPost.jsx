@@ -2,33 +2,57 @@ import React from "react";
 import s from './MyPost.module.css';
 import Post from './Post/Post'
 
-class MyPost extends React.Component{
-    constructor(props) {
-        super(props);
-        this.textareaRef = React.createRef();
-    }
-    onPostChange = () => {
-        const text = this.textareaRef.current.value;
-        this.props.onChange(text);
+const MyPost = (props) => {
+    const {
+        state,
+        onChange,
+        onClick,
+        onClickLike
+    } = props;
+
+    const textareaRef = React.createRef(); //useRef
+
+    const onPostChange = () => {
+        const text = textareaRef.current.value;
+        onChange(text);
+    };
+
+    const onPostClick = (id) => {
+        return () => onClickLike(id);
     }
 
-    render = () => {
-        return (
-            <div>
-                My posts
-                <div className={s.newPost}>
-                    <textarea placeholder='Text' onChange={this.onPostChange} ref={this.textareaRef} value={this.props.state.newPostText} />
-                    <button className={s.addBt} onClick={this.props.onClick}>Add</button>
-                </div>
-                <div className={s.posts}>
-                    {this.props.state.jsonPosts.map(obj => <Post key={obj.message}
-                                                            message={obj.message}
-                                                            likeCount={obj.likeCount}
-                                                            onClick={() => {this.props.onClickLike(obj.id)}}/>)}
-                </div>
+    return (
+        <>
+            My posts
+            <div
+                className={s.newPost}
+            >
+                <textarea
+                    placeholder='Text'
+                    onChange={onPostChange}
+                    ref={textareaRef}
+                    value={state.newPostText}
+                />
+                <button
+                    className={s.addBt}
+                    onClick={onClick}
+                >
+                    Add
+                </button>
             </div>
-        );
-    }
+            <div
+                className={s.posts}
+            >
+                {state.jsonPosts.map(obj => <Post key={obj.message}
+                                                  message={obj.message}
+                                                  likeCount={obj.likeCount}
+                                                  onClick={onPostClick(obj.id)}
+                    />
+                )}
+            </div>
+        </>
+    );
+
 }
 
 export default MyPost;

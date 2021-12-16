@@ -59,7 +59,7 @@ const profilePageReducer = (state = preloadedState, action) => {
                 ...state,
                 jsonPosts: state.jsonPosts.map(obj => {
                     if (obj.id === action.id) {
-                        obj.likeCount += 1;
+                        obj.likeCount = +obj.likeCount + 1;
                     }
                     return obj;
                 }),
