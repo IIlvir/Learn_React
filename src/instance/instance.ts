@@ -1,6 +1,7 @@
-import * as axios from "axios";
+import axios from "axios";
+import { AxiosInstance } from "axios";
 
-const instance = axios.create({
+const instance: AxiosInstance = axios.create({
     baseURL: "https://social-network.samuraijs.com/api/1.0",
     withCredentials: true,
     headers: {

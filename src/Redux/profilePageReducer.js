@@ -13,9 +13,9 @@ export const setPropfileStatus = (newStatus) => ({type: SET_PROFILE_STATUS, stat
 export const setPropfileStatusThunk = (status) => {
     return (dispatch) => {
         api.setProfileStatus(status).then(response => {
-            dispatch(setPropfileStatus(status))
+            if(response.data.resultCode === 0) dispatch(setPropfileStatus(status))
         })
-    }
+    };
 }
 
 export const getProfileStatusThunk = () => {
