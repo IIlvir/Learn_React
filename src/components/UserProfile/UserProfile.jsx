@@ -1,15 +1,15 @@
 import React, {useEffect} from "react";
 import css from "./UserProfile.module.css"
-import {useDispatch, useSelector} from "react-redux";
-import {getUserProfileInfo} from "../../Redux/userProfileReduces";
+import {getUserProfileInfoThunk} from "../../Redux/userProfileReduces";
 import {NavLink} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../../Redux/redux-store";
 
 const UserProfile = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const state = useSelector(state => state.userProfile);
+    const state = useAppSelector(state => state.userProfile);
 
-    const getUserProfileInfo1 = (userId) => dispatch(getUserProfileInfo(userId))
+    const getUserProfileInfo1 = (userId) => dispatch(getUserProfileInfoThunk(userId))
 
     useEffect(
         () => {

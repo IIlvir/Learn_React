@@ -1,9 +1,8 @@
-import { useDispatch, useSelector} from "react-redux";
 import {
     setCurrentPage,
-    getUsers,
-    subscribeToFriend,
-    unsubscribeToFriend
+    getUsersThunk,
+    subscribeToFriendThunk,
+    unsubscribeToFriendThunk
 } from "../../Redux/usersPageReducers";
 import React, {useEffect} from "react";
 import classes from "./UsersContainer.module.css";
@@ -11,25 +10,26 @@ import UsersItem from "./UsersItem";
 import defaultUserAva from "../../Images/userAva.png";
 import Preloader from "../Preloader/Preloader"
 import withAuthRedirect from "../../hoc/withAuthRedirect";
+import {useAppDispatch, useAppSelector} from "../../Redux/redux-store";
 
 const UsersContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const state = useSelector(
+    const state = useAppSelector(
         state => state.usersPage
     );
 
     const onClick = (user) => {
         if (!user.followed) {
-            dispatch(subscribeToFriend(user.id));
+            dispatch(subscribeToFriendThunk(user.id));
         } else {
-            dispatch(unsubscribeToFriend(user.id));
+            dispatch(unsubscribeToFriendThunk(user.id));
         }
     };
 
     const setCurrentPage1 = (currentPage) => dispatch(setCurrentPage(currentPage));
 
-    const getUsers1 = (pageSize, currentPage) => dispatch(getUsers(pageSize, currentPage));
+    const getUsers1 = (pageSize, currentPage) => dispatch(getUsersThunk(pageSize, currentPage));
 
     const onClickPage = (pageNumber) => {
         return () => {

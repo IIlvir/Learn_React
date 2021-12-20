@@ -1,10 +1,10 @@
 import {addLike, addPostAC, updateNewPostTextAC} from "../../../Redux/profilePageReducer";
 import MyPosts from "./MyPost";
-import {useDispatch, useSelector} from "react-redux";
 import {useCallback} from "react";
+import {useAppDispatch, useAppSelector} from "../../../Redux/redux-store";
 
 const MyPostsContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const onChange = useCallback(
         (text) => dispatch(updateNewPostTextAC(text)),
@@ -20,7 +20,7 @@ const MyPostsContainer = () => {
         (id) => dispatch(addLike(id)),
         [addLike]);
 
-    const stateMyPosts = useSelector(
+    const stateMyPosts = useAppSelector(
         state => state.profilePage
     )
 

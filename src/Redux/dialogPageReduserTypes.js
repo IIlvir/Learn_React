@@ -1,0 +1,4 @@
+export const Types = {
+    ADD_MESSAGE: "ADD-MESSAGE",
+    UPDATE_NEW_TEXT_MESSAGE: 'UPDATE-NEW-TEXT-MESSAGE',
+}

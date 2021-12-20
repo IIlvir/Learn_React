@@ -1,18 +1,18 @@
 import React, {useCallback, useEffect} from "react";
 import s from './MyFrends.module.css'
 import FriendItem from "./FrendItem/FrendItem";
-import {useDispatch, useSelector} from "react-redux";
-import {addMyFriendsToState} from "../../../Redux/navbarBlockReducer";
+import {addMyFriendsToStateThunk} from "../../../Redux/navbarBlockReducer";
+import {useAppDispatch, useAppSelector} from "../../../Redux/redux-store";
 
 const MyFriendsComponent = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const addMyFriends = useCallback(
-        () => dispatch(addMyFriendsToState()),
+        () => dispatch(addMyFriendsToStateThunk()),
         []
     )
 
-    const {jsonFriends} = useSelector(
+    const {jsonFriends} = useAppSelector(
         state => state.navbarBlock
     );
 

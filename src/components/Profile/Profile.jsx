@@ -3,12 +3,12 @@ import s from './Profile.module.css';
 import UserInfo from "./UserInfo/UserInfo";
 import MyPostContainer from "./MyPosts/MyPostsContainer";
 import ProfileStatus from "./ProfileStatus";
-import {getProfileStatusThunk, setPropfileStatusThunk} from "../../Redux/profilePageReducer";
-import {useDispatch, useSelector} from "react-redux";
+import {getProfileStatusThunk, setProfileStatusThunk} from "../../Redux/profilePageReducer";
+import {useAppDispatch, useAppSelector} from "../../Redux/redux-store";
 
 const Profile = () => {
-    const dispatch = useDispatch();
-    const {profileStatus} = useSelector(
+    const dispatch = useAppDispatch();
+    const {profileStatus} = useAppSelector(
         state => state.profilePage
     );
 
@@ -18,8 +18,8 @@ const Profile = () => {
     );
 
     const setProfileStatus = useCallback(
-        (status) => dispatch(setPropfileStatusThunk(status)),
-        [setPropfileStatusThunk]
+        (status) => dispatch(setProfileStatusThunk(status)),
+        [setProfileStatusThunk]
     );
 
     useEffect(

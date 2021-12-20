@@ -58,3 +58,4 @@ export type setProfileStatusType = {
     messages: string[],
     data: {},
 }
+

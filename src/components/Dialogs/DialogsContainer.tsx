@@ -1,11 +1,13 @@
-import {addMessageAC, updateNewTextMessageAC} from "../../Redux/dialogPageReducer";
+import {addMessageAC, updateNewTextMessageAC} from "../../Redux/dialogPageActionCreators";
 import Dialogs from "./Dialogs";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import withAuthRedirect from "../../hoc/withAuthRedirect";
 import {useCallback} from "react";
+import {useAppDispatch, useAppSelector} from "../../Redux/redux-store";
+import {dialogsPageSelector} from "../../Redux/dialogPageReducer";
 
 const DialogsContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const onClick = useCallback(
         () => dispatch(addMessageAC()),
@@ -17,9 +19,7 @@ const DialogsContainer = () => {
         []
     );
 
-    const stateDialogsPage = useSelector(
-        state => state.dialogsPage
-    );
+    const stateDialogsPage = useAppSelector(dialogsPageSelector);
 
     return <Dialogs
         state={stateDialogsPage}
