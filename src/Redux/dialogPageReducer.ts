@@ -1,11 +1,7 @@
 import {preloadedStateType} from "./TypesForRedusers/dialogPageReducerType";
-import * as actions from "./dialogPageActionCreators"
-import {Types} from "./dialogPageReduserTypes"
 import {RootState} from "./redux-store";
+import {createAction, createReducer} from "redux-act";
 
-type InferValueTypes <T> = T extends { [key: string] : infer U} ? U : never;
-
-type actionType = ReturnType<InferValueTypes<typeof actions>>
 
 const preloadedState: preloadedStateType = {
     jsonDialogs: [
@@ -22,28 +18,27 @@ const preloadedState: preloadedStateType = {
     newMessageText: '',
 };
 
-const dialogPageReducer = (state = preloadedState, action: actionType) => {
+export const addMessageAC = createAction("ADD-MESSAGE");
+export const updateNewTextMessageAC = createAction<string>("UPDATE-NEW-TEXT-MESSAGE");
 
-    switch (action.type) {
-        case 'ADD-MESSAGE':
-            const messageObj = {
-                id: String(state.jsonMessage.length + 1),
-                message: state.newMessageText,
-            };
-            return {
-                ...state,
-                newMessageText: '',
-                jsonMessage: [...state.jsonMessage, messageObj]
-            };
-        case 'UPDATE-NEW-TEXT-MESSAGE':
-            return {
-                ...state,
-                newMessageText: action.text,
-            };
-        default:
-            return state;
-    }
-};
+const dialogPageReducer = createReducer({}, preloadedState);
+
+dialogPageReducer
+    .on(addMessageAC, (state)=>{
+        const messageObj = {
+            id: String(state.jsonMessage.length + 1),
+            message: state.newMessageText,
+        };
+        return {
+            ...state,
+            newMessageText: '',
+            jsonMessage: [...state.jsonMessage, messageObj]
+        };
+    })
+    .on(updateNewTextMessageAC, (state,text)=>({
+        ...state,
+        newMessageText: text,
+    }))
 
 // selectors
 export const dialogsPageSelector = (state: RootState) => state.dialogsPage;

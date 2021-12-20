@@ -14,7 +14,7 @@ type preloadedStateType = {
     profileStatus: string,
 }
 
-const preloadedState: preloadedStateType = {
+const preloadedState: Readonly<preloadedStateType> = {
     jsonPosts: [
         {id: 1, message: "One", likeCount: 2},
         {id: 2, message: "Two", likeCount: 3},

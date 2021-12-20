@@ -1,6 +1,5 @@
-import {addMessageAC, updateNewTextMessageAC} from "../../Redux/dialogPageActionCreators";
+import {addMessageAC, updateNewTextMessageAC} from "../../Redux/dialogPageReducer";
 import Dialogs from "./Dialogs";
-import {useSelector} from "react-redux";
 import withAuthRedirect from "../../hoc/withAuthRedirect";
 import {useCallback} from "react";
 import {useAppDispatch, useAppSelector} from "../../Redux/redux-store";
