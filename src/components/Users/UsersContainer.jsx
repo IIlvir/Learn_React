@@ -2,9 +2,9 @@ import {
     setCurrentPage,
     getUsersThunk,
     subscribeToFriendThunk,
-    unsubscribeToFriendThunk
+    unsubscribeToFriendThunk, usersPageSelector
 } from "../../Redux/usersPageReducers";
-import React, {useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import classes from "./UsersContainer.module.css";
 import UsersItem from "./UsersItem";
 import defaultUserAva from "../../Images/userAva.png";
@@ -15,9 +15,7 @@ import {useAppDispatch, useAppSelector} from "../../Redux/redux-store";
 const UsersContainer = () => {
     const dispatch = useAppDispatch();
 
-    const state = useAppSelector(
-        state => state.usersPage
-    );
+    const state = useAppSelector(usersPageSelector);
 
     const onClick = (user) => {
         if (!user.followed) {
@@ -29,7 +27,9 @@ const UsersContainer = () => {
 
     const setCurrentPage1 = (currentPage) => dispatch(setCurrentPage(currentPage));
 
-    const getUsers1 = (pageSize, currentPage) => dispatch(getUsersThunk(pageSize, currentPage));
+    const getUsers1 = useCallback(
+        (pageSize, currentPage) => dispatch(getUsersThunk(pageSize, currentPage)),
+        [dispatch]);
 
     const onClickPage = (pageNumber) => {
         return () => {
@@ -42,7 +42,7 @@ const UsersContainer = () => {
 
     useEffect(
         () => getUsers1(state.pageSize, state.currentPage),
-        []
+        [getUsers1, state.currentPage, state.pageSize]
     );
 
 

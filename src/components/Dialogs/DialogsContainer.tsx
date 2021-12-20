@@ -10,12 +10,12 @@ const DialogsContainer = () => {
 
     const onClick = useCallback(
         () => dispatch(addMessageAC()),
-        []
+        [dispatch]
     );
 
     const onChange = useCallback(
         (text) => dispatch(updateNewTextMessageAC(text)),
-        []
+        [dispatch]
     );
 
     const stateDialogsPage = useAppSelector(dialogsPageSelector);

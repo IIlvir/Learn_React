@@ -1,6 +1,6 @@
 import {api} from "../api/api";
 import {createAction, createReducer} from "redux-act";
-import {AppDispatch} from "./redux-store";
+import {AppDispatch, RootState} from "./redux-store";
 
 type postType = {
     id: number,
@@ -81,6 +81,9 @@ export const getProfileStatusThunk = () => {
         })
     }
 }
+
+//Selectors
+export const profilePageSelector = (state: RootState) => state.profilePage
 
 export default profilePageReducer;
 

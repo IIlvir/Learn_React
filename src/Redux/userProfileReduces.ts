@@ -1,5 +1,5 @@
 import {api} from "../api/api";
-import {AppDispatch} from "./redux-store";
+import {AppDispatch, RootState} from "./redux-store";
 import {createAction, createReducer} from "redux-act";
 
 type contactsType = {
@@ -64,5 +64,8 @@ export const getUserProfileInfoThunk = (userId: number) => {
         }
     );
 }
+
+//Selectors
+export const userProfileSelector = (state: RootState) => state.userProfile
 
 export default userProfileReducer;

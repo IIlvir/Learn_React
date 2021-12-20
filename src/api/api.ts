@@ -1,4 +1,3 @@
-import { AxiosResponse } from "axios";
 import instance from "../instance/instance";
 import {authMeType, getUsersType, followToFriendType, getUserProfileInfoType, setProfileStatusType} from "./apiTypes";
 

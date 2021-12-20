@@ -1,10 +1,10 @@
 import {api} from "../api/api";
 import {addMyFriendsToStateThunk} from "./navbarBlockReducer";
-import {AppDispatch} from "./redux-store";
+import {AppDispatch, RootState} from "./redux-store";
 import {createAction, createReducer} from "redux-act";
 import {userType} from "../api/apiTypes";
 
-type preloadedState = {
+type preloadedStateType = {
     users: userType[],
     pageSize: number,
     totalUsersCount: number,
@@ -13,7 +13,7 @@ type preloadedState = {
     followingProgress: boolean,
 }
 
-const preloadedState: preloadedState = {
+const preloadedState: preloadedStateType = {
     users: [],
     pageSize: 10,
     totalUsersCount: 0,
@@ -82,15 +82,18 @@ export const getUsersThunk = (pageSize = 10, currentPage = 1) => {
 
 export const subscribeToFriendThunk = (id: number) => {
     return (
-        (dispatch: AppDispatch) => {
+        (dispatch: Function) => {
             dispatch(toggleFollowingProcess(true));
             api.subscribeToFriend(id).then((response) => {
                 if (response.data.resultCode === 0) {
                     dispatch(toggleFollowAC(id));
                     dispatch(toggleFollowingProcess(false));
                 }
-            }).then(
-                //dispatch(addMyFriendsToStateThunk())
+                return response;
+            }).then((response)=>{
+                console.log('response = ', response)
+                dispatch(addMyFriendsToStateThunk())
+            }
             );
         }
     );
@@ -111,5 +114,8 @@ export const unsubscribeToFriendThunk = (id: number) => {
         }
     )
 }
+
+//Selectors
+export const usersPageSelector = (state: RootState) => state.usersPage
 
 export default usersPageReducers;

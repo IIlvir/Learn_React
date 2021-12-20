@@ -1,22 +1,24 @@
-import React, {useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import css from "./UserProfile.module.css"
-import {getUserProfileInfoThunk} from "../../Redux/userProfileReduces";
+import {getUserProfileInfoThunk, userProfileSelector} from "../../Redux/userProfileReduces";
 import {NavLink} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../Redux/redux-store";
 
 const UserProfile = () => {
     const dispatch = useAppDispatch();
 
-    const state = useAppSelector(state => state.userProfile);
+    const state = useAppSelector(userProfileSelector);
 
-    const getUserProfileInfo1 = (userId) => dispatch(getUserProfileInfoThunk(userId))
+    const getUserProfileInfo1 = useCallback(
+        (userId) => dispatch(getUserProfileInfoThunk(userId)),
+        [dispatch]);
 
     useEffect(
         () => {
             let userId = document.location.pathname.split('/')[2];
             getUserProfileInfo1(userId);
         },
-        [])
+        [getUserProfileInfo1])
 
     return (
         <div className={css.userProfileBlock}>

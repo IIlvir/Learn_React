@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from "react";
 import s from './MyFrends.module.css'
 import FriendItem from "./FrendItem/FrendItem";
-import {addMyFriendsToStateThunk} from "../../../Redux/navbarBlockReducer";
+import {addMyFriendsToStateThunk, navbarBlockSelector} from "../../../Redux/navbarBlockReducer";
 import {useAppDispatch, useAppSelector} from "../../../Redux/redux-store";
 
 const MyFriendsComponent = () => {
@@ -9,16 +9,14 @@ const MyFriendsComponent = () => {
 
     const addMyFriends = useCallback(
         () => dispatch(addMyFriendsToStateThunk()),
-        []
+        [dispatch]
     )
 
-    const {jsonFriends} = useAppSelector(
-        state => state.navbarBlock
-    );
+    const {jsonFriends} = useAppSelector(navbarBlockSelector);
 
     useEffect(
         () => addMyFriends(),
-        []
+        [addMyFriends]
     );
 
     return (

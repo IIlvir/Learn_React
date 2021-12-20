@@ -2,6 +2,7 @@ import {api} from "../api/api";
 import {userType} from "../api/apiTypes";
 import {preloadedStateType} from "./TypesForRedusers/navbarBlockReducerTypes";
 import {createAction, createReducer} from "redux-act";
+import {RootState} from "./redux-store";
 
 const preloadedState: preloadedStateType = {
     jsonMenu: [
@@ -32,5 +33,8 @@ export const addMyFriendsToStateThunk = () => {
         });
     };
 }
+
+//Selectors
+export const navbarBlockSelector = (state: RootState) => state.navbarBlock
 
 export default navbarBlockReducer;

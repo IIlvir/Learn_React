@@ -1,24 +1,21 @@
 import React, {useCallback, useEffect} from "react";
 import Header from "./Header";
-import {useDispatch, useSelector} from "react-redux";
-import {authThunk} from "../../Redux/authReducer";
+import {authStateSelector, authThunk} from "../../Redux/authReducer";
 import {useAppDispatch, useAppSelector} from "../../Redux/redux-store";
 
 const HeaderComponent = () => {
     const dispatch = useAppDispatch();
 
-    const authState = useAppSelector(
-        (state) => state.auth
-    );
+    const authState = useAppSelector(authStateSelector);
 
     const authMe = useCallback(
         () => dispatch(authThunk()),
-        []
+        [dispatch]
     );
 
     useEffect(
         () => authMe(),
-        []
+        [authMe]
     );
 
     return <Header

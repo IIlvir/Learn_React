@@ -1,6 +1,7 @@
 import {api} from "../api/api";
 import {preloaderStateType, userDataType} from "./TypesForRedusers/authReduserTypes";
 import {createAction, createReducer} from "redux-act";
+import {RootState} from "./redux-store";
 
 //preloaderState
 const preloaderState: preloaderStateType = {
@@ -38,5 +39,8 @@ export const authThunk = () => {
         })
     }
 }
+
+//Selectors
+export const authStateSelector = (state: RootState) => state.auth
 
 export default authReducer;

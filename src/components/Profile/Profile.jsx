@@ -3,28 +3,26 @@ import s from './Profile.module.css';
 import UserInfo from "./UserInfo/UserInfo";
 import MyPostContainer from "./MyPosts/MyPostsContainer";
 import ProfileStatus from "./ProfileStatus";
-import {getProfileStatusThunk, setProfileStatusThunk} from "../../Redux/profilePageReducer";
+import {getProfileStatusThunk, profilePageSelector, setProfileStatusThunk} from "../../Redux/profilePageReducer";
 import {useAppDispatch, useAppSelector} from "../../Redux/redux-store";
 
 const Profile = () => {
     const dispatch = useAppDispatch();
-    const {profileStatus} = useAppSelector(
-        state => state.profilePage
-    );
+    const {profileStatus} = useAppSelector(profilePageSelector);
 
     const getProfileStatus = useCallback(
         () => dispatch(getProfileStatusThunk()),
-        []
+        [dispatch]
     );
 
     const setProfileStatus = useCallback(
         (status) => dispatch(setProfileStatusThunk(status)),
-        [setProfileStatusThunk]
+        [dispatch]
     );
 
     useEffect(
         () => getProfileStatus(),
-        []
+        [getProfileStatus]
     );
 
     return (
